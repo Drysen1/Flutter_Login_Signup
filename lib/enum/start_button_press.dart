@@ -1,4 +1,5 @@
 enum StartButtonPress{
   login,
-  signUp
+  signUp,
+  initial
 }

@@ -8,9 +8,11 @@ class AnimatedButton extends StatelessWidget {
   final String text;
   final Duration duration;
   final double fontSize;
+  final Function onEnd;
   const AnimatedButton({ Key? key, required this.height, required this.color, 
                           required this.onTap, required this.text, 
-                          required this.duration, required this.fontSize }) : super(key: key);
+                          required this.duration, required this.fontSize, 
+                          required this.onEnd }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class AnimatedButton extends StatelessWidget {
         ),
         onTap: () { onTap(); }
       ),
+      onEnd: () { onEnd(); },
     );
   }
 
