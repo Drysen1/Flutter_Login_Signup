@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signin/enum/startbuttonenum.dart';
-import 'package:flutter_login_signin/widgets/animated_big_button.dart';
+import 'package:flutter_login_signin/enum/startButtonPress.dart';
+import 'package:flutter_login_signin/widgets/animated_button.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -32,28 +32,29 @@ class _StartScreenState extends State<StartScreen> {
 
   Widget _mainUI() {
     return LayoutBuilder(
-      builder: (context, constraints) {        
-        _initialHeight = constraints.biggest.height;
-        _setButtonHeights(StartButtonEnum.initial);
+      builder: (context, constraints) {   
+        _setInitialHeight(constraints.biggest.height);
         return Column(
           children: [
-            AnimatedBigButton(
+            AnimatedButton(
               height: _loginButtonHeight, 
               color: Colors.amberAccent,
               text: "Login",
+              duration: const Duration(milliseconds: 400),
               onTap: () {
                 setState(() {
-                  _setButtonHeights(StartButtonEnum.login);
+                  _setButtonHeights(StartButtonPress.login);
                 });
                 },
               ),
-            AnimatedBigButton(
+            AnimatedButton(
               height: _signUpButtonHeight, 
               color: Colors.greenAccent,
               text: "Sign up",
+              duration: const Duration(milliseconds: 400),
               onTap: () {
                 setState(() {
-                  _setButtonHeights(StartButtonEnum.signup);
+                  _setButtonHeights(StartButtonPress.signUp);
                 });
               },
             ),
@@ -63,24 +64,33 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 
-  void _setButtonHeights(StartButtonEnum buttonState){
-    switch(buttonState){
-      case StartButtonEnum.login: {
-        _loginButtonHeight = _loginButtonHeight * 2;
-        _signUpButtonHeight = _signUpButtonHeight - _signUpButtonHeight; 
-      }
-      break;
-      case StartButtonEnum.signup: {
-        _loginButtonHeight = _loginButtonHeight - _loginButtonHeight;
-        _signUpButtonHeight = _signUpButtonHeight * 2;  
-      }
-      break;
-      case StartButtonEnum.initial:
-      default: {
-        if(_loginButtonHeight <= 0 && _signUpButtonHeight <= 0) {
-          _loginButtonHeight = _initialHeight / 2;
-          _signUpButtonHeight = _initialHeight / 2;
+  void _setInitialHeight(double height){
+    if(_initialHeight == 0){
+      _initialHeight = height;
+      _loginButtonHeight = _initialHeight / 2;
+      _signUpButtonHeight = _initialHeight / 2;
+    }
+  }
+
+  void _setButtonHeights(StartButtonPress buttonPressType){
+    switch(buttonPressType){
+      case StartButtonPress.login: {
+        if(_loginButtonHeight <= _initialHeight){
+          _loginButtonHeight = _loginButtonHeight * 2;
+          _signUpButtonHeight = _signUpButtonHeight - _signUpButtonHeight;
         }
+      }
+      break;
+      case StartButtonPress.signUp: {
+        if(_signUpButtonHeight <= _initialHeight){
+          _loginButtonHeight = _loginButtonHeight - _loginButtonHeight;
+          _signUpButtonHeight = _signUpButtonHeight * 2;
+        }
+      }
+      break;
+      default: {
+        _loginButtonHeight = _initialHeight / 2;
+        _signUpButtonHeight = _initialHeight / 2;
       }
     }
   }
