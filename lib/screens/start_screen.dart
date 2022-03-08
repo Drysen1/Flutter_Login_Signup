@@ -4,7 +4,6 @@ import 'package:flutter_login_signin/screens/login_screen.dart';
 import 'package:flutter_login_signin/screens/sign_up_screen.dart';
 import 'package:flutter_login_signin/widgets/animated_button.dart';
 import 'package:flutter_login_signin/widgets/app_name_title.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -18,19 +17,19 @@ class _StartScreenState extends State<StartScreen> {
   double _signUpButtonHeight = 0;
   double _initialHeight = 0;
   StartButtonPress _startButtonPress = StartButtonPress.initial;
+  bool _didNavigate = false;
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: kIsWeb ? null : AppBar(
+      appBar: size.width > 1000 ? null : AppBar(
           title: const AppNameTitle(text: "The App", fontSize: 32),
           elevation: 0,
           backgroundColor: Colors.pinkAccent),
       body: _mainUI(),
     );
   }
-
-
 
   Widget _mainUI() {
     var size = MediaQuery.of(context).size;
@@ -68,6 +67,7 @@ class _StartScreenState extends State<StartScreen> {
     return LayoutBuilder(
       builder: (context, constraints) {   
         _setInitialHeight(constraints.biggest.height);
+        print(constraints.biggest.height);
         return Column(
           children: [
             _loginButton(),
@@ -92,7 +92,7 @@ class _StartScreenState extends State<StartScreen> {
         });
         },
       onEnd: () async {
-        await _navigateToLoginScreen();
+        await _navigate();
       },
     );
   }
@@ -111,13 +111,13 @@ class _StartScreenState extends State<StartScreen> {
         });
       },
       onEnd: () async {
-        await _navigateToSignUpScreen();
+        await _navigate();
       },
     );
  }
 
   void _setInitialHeight(double height){
-    if(_initialHeight == 0){
+    if(_startButtonPress == StartButtonPress.initial){
       _initialHeight = height;
       _loginButtonHeight = _initialHeight / 2;
       _signUpButtonHeight = _initialHeight / 2;
@@ -147,11 +147,15 @@ class _StartScreenState extends State<StartScreen> {
     }
   }
 
-  Future _navigateToLoginScreen() async{
-    if(_startButtonPress == StartButtonPress.login){
+  Future _navigate() async{
+    var page = _startButtonPress == StartButtonPress.login ? const LoginScreen() : const SignUpScreen();
+
+    if(!_didNavigate && _startButtonPress != StartButtonPress.initial){
+      _didNavigate = true;
+
       await Navigator.of(context).push(PageRouteBuilder(
           opaque: false,
-          pageBuilder: (context, animation, secondaryAnimation) => const LoginScreen(),
+          pageBuilder: (context, animation, secondaryAnimation) => page,
           transitionDuration: const Duration(milliseconds: 250),
           transitionsBuilder:
             (context, animation, anotherAnimation, child) {
@@ -164,28 +168,14 @@ class _StartScreenState extends State<StartScreen> {
             );
           }
         )
-      ); 
-    }
-  }
+      );
 
-  Future _navigateToSignUpScreen() async{
-    if(_startButtonPress == StartButtonPress.signUp){
-      await Navigator.of(context).push(PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (context, animation, secondaryAnimation) => const SignUpScreen(),
-        transitionDuration: const Duration(milliseconds: 250),
-        transitionsBuilder:
-          (context, animation, anotherAnimation, child) {
-          animation = CurvedAnimation(
-          curve: Curves.easeIn, 
-          parent: animation);
-          return FadeTransition(
-            opacity:animation,
-            child: child,
-          );
-        }
-      )
-    );
+      _startButtonPress = StartButtonPress.initial;
+      _didNavigate = false;
+
+      setState(() {
+        _setButtonHeights(); 
+      });  
     }
   }
 }

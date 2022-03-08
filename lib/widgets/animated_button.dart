@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_signin/widgets/bungee_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AnimatedButton extends StatelessWidget {
@@ -35,13 +36,10 @@ class AnimatedButton extends StatelessWidget {
   }
 
   Widget _buttonText(){
-    return Text(
-      text,
-      style: GoogleFonts.bungee(
-        color: Colors.black87,
-        fontSize: fontSize,
-        fontWeight: FontWeight.bold,
-      ),
+    return BungeeText(
+      text: text, 
+      fontSize: fontSize, 
+      fontWeight: FontWeight.bold
     );
   }
 }
