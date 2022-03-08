@@ -1,4 +1,8 @@
-# flutter_login_signin
+# Flutter_Login_SignUp
+
+A UI example of a login/signup screen with some animations.
+
+See an online example: <https://drysen1.github.io/flutter-web-examples/login-signup/#/>
 
 A new Flutter project.
 
