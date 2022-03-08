@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login_signin/enum/startButtonPress.dart';
+import 'package:flutter_login_signin/enum/start_button_press.dart';
 import 'package:flutter_login_signin/widgets/animated_button.dart';
+import 'package:flutter_login_signin/widgets/app_name_title.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -18,12 +19,7 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            "THE APP",
-            style: TextStyle(
-              color: Colors.black87
-            ),
-          ),
+          title: const AppNameTitle(text: "The App", fontSize: 32),
           elevation: 0,
           backgroundColor: Colors.pinkAccent),
       body: _mainUI(),
@@ -40,6 +36,7 @@ class _StartScreenState extends State<StartScreen> {
               height: _loginButtonHeight, 
               color: Colors.amberAccent,
               text: "Login",
+              fontSize: 32,
               duration: const Duration(milliseconds: 400),
               onTap: () {
                 setState(() {
@@ -51,6 +48,7 @@ class _StartScreenState extends State<StartScreen> {
               height: _signUpButtonHeight, 
               color: Colors.greenAccent,
               text: "Sign up",
+              fontSize: 32,
               duration: const Duration(milliseconds: 400),
               onTap: () {
                 setState(() {

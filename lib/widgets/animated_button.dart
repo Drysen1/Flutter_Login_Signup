@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AnimatedButton extends StatelessWidget {
   final double height;
@@ -6,9 +7,10 @@ class AnimatedButton extends StatelessWidget {
   final Function onTap;
   final String text;
   final Duration duration;
+  final double fontSize;
   const AnimatedButton({ Key? key, required this.height, required this.color, 
                           required this.onTap, required this.text, 
-                          required this.duration }) : super(key: key);
+                          required this.duration, required this.fontSize }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,21 @@ class AnimatedButton extends StatelessWidget {
         child: Ink(
           color: color,
           child: Center(
-            child: Text(text),
+            child: _buttonText(),
           ),
         ),
         onTap: () { onTap(); }
+      ),
+    );
+  }
+
+  Widget _buttonText(){
+    return Text(
+      text,
+      style: GoogleFonts.bungee(
+        color: Colors.black87,
+        fontSize: fontSize,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
