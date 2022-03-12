@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_login_signin/widgets/app_name_title.dart';
 import 'package:flutter_login_signin/widgets/bungee_button.dart';
 import 'package:flutter_login_signin/widgets/bungee_text.dart';
@@ -13,10 +14,12 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMixin {
   late AnimationController _titleController;
+  late AnimationController _emailController;
   late AnimationController _usernameController;
   late AnimationController _passwordController;
   late AnimationController _buttonController;
   late Animation<double> _titleAnimation;
+  late Animation<double> _emailAnimation;
   late Animation<double> _usernameAnimation;
   late Animation<double> _passwordAnimation;
   late Animation<double> _buttonAnimation;
@@ -25,17 +28,20 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-      _titleController = _animationController(1300);
-      _usernameController = _animationController(1200);
-      _passwordController = _animationController(1100);
-      _buttonController = _animationController(1000);
+      _titleController = _animationController(700);
+      _emailController = _animationController(800);
+      _usernameController = _animationController(900);
+      _passwordController = _animationController(1000);
+      _buttonController = _animationController(1100);
 
-      _titleAnimation = CurvedAnimation(parent: _titleController, curve: Curves.easeInCubic);
-      _usernameAnimation = CurvedAnimation(parent: _usernameController, curve: Curves.easeInCubic);
-      _passwordAnimation = CurvedAnimation(parent: _passwordController, curve: Curves.easeInCubic);
-      _buttonAnimation = CurvedAnimation(parent: _buttonController, curve: Curves.easeInCubic);
+      _titleAnimation = CurvedAnimation(parent: _titleController, curve: Curves.easeInToLinear);
+      _emailAnimation = CurvedAnimation(parent: _emailController, curve: Curves.easeInToLinear);
+      _usernameAnimation = CurvedAnimation(parent: _usernameController, curve: Curves.easeInToLinear);
+      _passwordAnimation = CurvedAnimation(parent: _passwordController, curve: Curves.easeInToLinear);
+      _buttonAnimation = CurvedAnimation(parent: _buttonController, curve: Curves.easeInToLinear);
   
       _titleController.forward();
+      _emailController.forward();
       _usernameController.forward();
       _passwordController.forward();
       _buttonController.forward();
@@ -97,6 +103,8 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
           children: [
             _title(),
             const SizedBox(height: 20,),
+            _emailText(),
+            const SizedBox(height: 10),
             _usernameText(),
             const SizedBox(height: 10,),
             _passwordText(),
@@ -115,6 +123,19 @@ class _SignUpScreenState extends State<SignUpScreen> with TickerProviderStateMix
         text: "Sign Up", 
         fontSize: 48, 
         fontWeight: FontWeight.bold
+      ),
+    );
+  }
+
+  Widget _emailText(){
+    return FadeTransition(
+      opacity: _emailAnimation,
+      child: const SizedBox(
+        width: 340,
+        child: BungeeTextfield(
+          labelText: "Email", 
+          isPassword: false
+        ),
       ),
     );
   }

@@ -25,15 +25,15 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
   void initState() {
     super.initState();
 
-      _titleController = _animationController(1000);
-      _usernameController = _animationController(1100);
-      _passwordController = _animationController(1200);
-      _buttonController = _animationController(1300);
+      _titleController = _animationController(700);
+      _usernameController = _animationController(800);
+      _passwordController = _animationController(900);
+      _buttonController = _animationController(1000);
 
-      _titleAnimation = CurvedAnimation(parent: _titleController, curve: Curves.easeInCubic);
-      _usernameAnimation = CurvedAnimation(parent: _usernameController, curve: Curves.easeInCubic);
-      _passwordAnimation = CurvedAnimation(parent: _passwordController, curve: Curves.easeInCubic);
-      _buttonAnimation = CurvedAnimation(parent: _buttonController, curve: Curves.easeInCubic);
+      _titleAnimation = CurvedAnimation(parent: _titleController, curve: Curves.easeInToLinear);
+      _usernameAnimation = CurvedAnimation(parent: _usernameController, curve: Curves.easeInToLinear);
+      _passwordAnimation = CurvedAnimation(parent: _passwordController, curve: Curves.easeInToLinear);
+      _buttonAnimation = CurvedAnimation(parent: _buttonController, curve: Curves.easeInToLinear);
   
       _titleController.forward();
       _usernameController.forward();
